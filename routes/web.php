@@ -27,4 +27,6 @@ Route::get('/dashboard', 'UserController@show_dashboard')->name("dashboard");
 
 Route::get('/funeral/add', 'UserController@show_add_funeral')->name("show_add_funeral");
 
+Route::get('/make_poster', 'UserController@show_make_poster')->name('show_make_poster');
+
 

@@ -80,90 +80,92 @@
         </div>
 
     </center>
-    <br><br><br>
-    <div class="row">
-        <center>
-            <div><h3>Sign Up Here !</h3></div>
-        </center>
+    {{--<br><br><br>--}}
+    <div class="panel panel-default">
+        <div class="panel-heading">Sign Up</div>
+        <div class="panel-body">
+            <div class="row">
+                <form method="post" action="{{route('register')}}">
+                    {{csrf_field()}}
+                    <div class="col-sm-1"></div>
+
+                    <div class="col-sm-3">
+                        <div>
+                            <label>First name</label>
+                            <input type="text" class="form form-control" name="first_name" value="{{old("first_name")}}"
+                                   required>
+                        </div>
+                        <br>
+                        <div>
+                            <label>Location</label>
+                            <input type="text" class="form form-control" name="location" value="{{old("location")}}"
+                                   required>
+                        </div>
+                        <br>
+
+                        <div>
+                            <label>Telephone</label>
+                            <input type="number" class="form form-control" name="telephone" value="{{old("telephone")}}"
+                                   required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+
+                        <div>
+                            <label>Last name</label>
+                            <input type="text" class="form form-control" name="last_name" value="{{old("last_name")}}"
+                                   required>
+                        </div>
+                        <br>
+
+                        <div>
+                            <label>Address</label>
+                            <input type="text" class="form form-control" name="address" value="{{old("address")}}"
+                                   required>
+                        </div>
+                        <br>
+
+                        <div>
+                            <label>Password</label>
+                            <input type="password" class="form form-control" name="password" required>
+                        </div>
+
+                        <br><br>
+                        <div>
+                            <button style="float: right" class="btn btn-primary btn-lg">Submit</button>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div>
+                            <label>Gender</label>
+                            <select class="form form-control" required name="gender">
+                                <option></option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div>
+                            <label>Email</label>
+                            <input type="email" class="form form-control" name="email" value="{{old("email")}}"
+                                   required>
+                        </div>
+                        <br>
+
+                        <div>
+                            <label>Confirm Password</label>
+                            <input type="password" class="form form-control" name="cpassword" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1"></div>
+                </form>
+            </div>
+            <br><br>
+        </div>
     </div>
-    <br>
-
-    <div class="row">
-        <form method="post" action="{{route('register')}}">
-            {{csrf_field()}}
-            <div class="col-sm-1"></div>
-
-            <div class="col-sm-3">
-                <div>
-                    <label>First name</label>
-                    <input type="text" class="form form-control" name="first_name" value="{{old("first_name")}}"
-                           required>
-                </div>
-                <br>
-                <div>
-                    <label>Location</label>
-                    <input type="text" class="form form-control" name="location" value="{{old("location")}}" required>
-                </div>
-                <br>
-
-                <div>
-                    <label>Telephone</label>
-                    <input type="number" class="form form-control" name="telephone" value="{{old("telephone")}}"
-                           required>
-                </div>
-            </div>
-
-            <div class="col-sm-3">
-
-                <div>
-                    <label>Last name</label>
-                    <input type="text" class="form form-control" name="last_name" value="{{old("last_name")}}" required>
-                </div>
-                <br>
-
-                <div>
-                    <label>Address</label>
-                    <input type="text" class="form form-control" name="address" value="{{old("address")}}" required>
-                </div>
-                <br>
-
-                <div>
-                    <label>Password</label>
-                    <input type="password" class="form form-control" name="password" required>
-                </div>
-
-                <br><br>
-                <div>
-                    <button style="float: right" class="btn btn-primary btn-lg">Submit</button>
-                </div>
-            </div>
-
-            <div class="col-sm-3">
-                <div>
-                    <label>Gender</label>
-                    <select class="form form-control" required name="gender">
-                        <option></option>
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
-                    </select>
-                </div>
-                <br>
-                <div>
-                    <label>Email</label>
-                    <input type="email" class="form form-control" name="email" value="{{old("email")}}" required>
-                </div>
-                <br>
-
-                <div>
-                    <label>Confirm Password</label>
-                    <input type="password" class="form form-control" name="cpassword" required>
-                </div>
-            </div>
-
-            <div class="col-sm-1"></div>
-        </form>
-    </div>
-    <br><br>
 </div>
 </body>
 </html>

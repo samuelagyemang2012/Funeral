@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Funeral;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller
 {
@@ -62,7 +63,16 @@ class UserController extends Controller
 
     public function show_dashboard()
     {
-        return view('dashboard');
+        $f = new Funeral();
+        $auth = Auth::user();
+
+        $name = $auth['first_name'] . ' ' . $auth['last_name'];
+
+        $data = $f->get_funeral($auth['id']);
+
+        $num = $f->num_funerals($auth['id']);
+
+        return view('dashboard')->with('name', $name)->with('data', $data)->with('num', $num);
     }
 
     public function show_add_funeral()
@@ -74,27 +84,54 @@ class UserController extends Controller
     {
         $input = $request->all();
 
-//        return $input['wk'];
+        $f = new Funeral();
+        $id = Auth::user()->id;
+
+        $file = '';
+        $file_name = '';
+
         $rules = [
             'wk' => 'required',
             'name' => 'required|min:2',
             'deceased_name' => 'required|min:2',
             'age' => 'required|numeric|min:1',
+            'information' => 'required',
             'brochure' => "required",
-            'time' => "required",
-            'location' => 'required|min:2',
-            'date' => 'required|date|after:today',
+            'funeral_time' => "required",
+            'funeral_location' => 'required|min:2',
+            'funeral_date' => 'required|date|after:today',
             'attire' => 'required|min:2',
             'wake_keeping_date' => 'nullable|required_if:wk,1|date|after:today',
-            'wake_keeping_time' => 'nullable|required_if:wk,1|min:6',
+            'wake_keeping_time' => 'nullable|required_if:wk,1',
             'wake_keeping_location' => 'nullable|required_if:wk,1|min:2',
-            'information' => "required",
             'latitude' => "required|numeric",
             'longitude' => 'required|numeric',
         ];
 
         $this->validate($request, $rules);
 
+
+        if (Input::hasFile('brochure')) {
+
+            $file = Input::file('brochure');
+            $file->move('uploads', $file->getClientOriginalName());
+            $file_name = $file->getClientOriginalName();
+
+        }
+
+        if ($input['wk'] == 0) {
+            $f->add($id, $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['wk'], 'none', 'none', 'none');
+            return redirect('/dashboard')->with('status', 'Funeral added successfully');
+        } else {
+            $f->add($id, $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['wk'], $input['wake_keeping_date'], $input['wake_keeping_time'], $input['wake_keeping_location']);
+            return redirect('/dashboard')->with('status', 'Funeral added successfully');
+        }
+
+    }
+
+    public function show_make_poster()
+    {
+        return view('make_poster');
     }
 
 

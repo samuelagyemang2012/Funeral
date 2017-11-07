@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+    <title>Funeral App</title>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
@@ -14,6 +14,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{{asset("js/myscript.js")}}"></script>
+    <script src="{{asset("js/poster.js")}}"></script>
 
 
     @yield('load_map')
@@ -39,8 +40,9 @@
 <nav class="nav navbar-default">
     <ul class="nav navbar-nav">
         {{--<li><a href="/jireh/profile"><b class="thead">My Loans</b></a></li>--}}
-        <li><a class="btn" href=""><b class="thead">My Funerals</b></a></li>
+        <li><a class="btn" href="{{route('dashboard')}}"><b class="thead">My Funerals</b></a></li>
         <li><a class="btn" href="{{route("show_add_funeral")}}"><b class="thead">Add Funeral</b></a></li>
+        <li><a class="btn" href="{{route('show_make_poster')}}"><b class="thead">Make a Poster</b></a></li>
 
     </ul>
 

@@ -44,7 +44,7 @@
                     <div class="panel-heading">Funeral Details</div>
 
                     <div class="panel-body">
-                        <form method="post" action="{{route("add_funeral")}}">
+                        <form method="post" action="{{route("add_funeral")}}" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="row">
 
@@ -97,10 +97,10 @@
 
                                     <div>
                                         <label>
-                                            Time
+                                            Funeral Time
                                         </label>
-                                        <input type="time" class="form-control" id="time" name="time"
-                                               value="{{old('time')}}" required>
+                                        <input type="time" class="form-control" id="funeral_time" name="funeral_time"
+                                               value="{{old('funeral_time')}}" required>
                                     </div>
                                     <br>
                                 </div>
@@ -108,19 +108,19 @@
                                 <div class="col-sm-4">
                                     <div>
                                         <label>
-                                            Location
+                                            Funeral Location
                                         </label>
-                                        <input type="text" class="form-control" id="location" name="location"
-                                               value="{{old('location')}}" required>
+                                        <input type="text" class="form-control" id="location" name="funeral_location"
+                                               value="{{old('funeral_location')}}" required>
                                     </div>
                                     <br>
 
                                     <div>
                                         <label>
-                                            Date
+                                            Funeral Date
                                         </label>
-                                        <input type="date" class="form-control" id="date" name="date"
-                                               value="{{old('date')}}" required>
+                                        <input type="date" class="form-control" id="date" name="funeral_date"
+                                               value="{{old('funeral_date')}}" required>
                                     </div>
                                 </div>
 
@@ -138,7 +138,7 @@
                                 <div class="col-sm-4">
                                     <br>
                                     {{--<label>--}}
-                                        {{--Wake-keeping--}}
+                                    {{--Wake-keeping--}}
                                     {{--</label>--}}
                                     <select name="wk" class="form-control" required>
                                         <option value="0">No Wake-Keeping</option>
@@ -155,9 +155,8 @@
                                     <label>
                                         Wake-keeping Date
                                     </label>
-                                    <input  class="form-control" type="date" id="wkd"
-                                           value="{{old('wake_keeping_date')}}" name="wake_keeping_date"
-                                           required>
+                                    <input class="form-control" type="date" id="wkd"
+                                           value="{{old('wake_keeping_date')}}" name="wake_keeping_date">
                                 </div>
 
                                 <div class="col-sm-4">
@@ -165,8 +164,8 @@
                                     <label>
                                         Wake-keeping Time
                                     </label>
-                                    <input  class="form-control" type="time" id="wkt" name="wake_keeping_time"
-                                           value="{{old('wake_keeping_time')}}" required>
+                                    <input class="form-control" type="time" id="wkt" name="wake_keeping_time"
+                                           value="{{old('wake_keeping_time')}}">
                                 </div>
 
 
@@ -175,9 +174,9 @@
                                     <label>
                                         Wake-keeping Location
                                     </label>
-                                    <input  class="form-control" type="text" id="wkl"
+                                    <input class="form-control" type="text" id="wkl"
                                            name="wake_keeping_location"
-                                           value="{{old('wake_keeping_location')}}" required>
+                                           value="{{old('wake_keeping_location')}}">
                                 </div>
                                 <br>
                             </div>

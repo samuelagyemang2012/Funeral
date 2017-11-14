@@ -27,6 +27,12 @@ Route::get('/dashboard', 'UserController@show_dashboard')->name("dashboard");
 
 Route::get('/funeral/add', 'UserController@show_add_funeral')->name("show_add_funeral");
 
+Route::get('/funeral/edit/{id}', 'UserController@show_edit_funeral')->name("show_edit_funeral");
+
+Route::post('update', 'UserController@update_funeral')->name("edit");
+
+Route::get('delete', 'UserController@delete_funeral')->name('delete');
+
 Route::get('/make_poster', 'UserController@show_make_poster')->name('show_make_poster');
 
 

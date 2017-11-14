@@ -131,7 +131,12 @@
                                             src="https://www.google.com/maps/embed/v1/place?q={{$funeral->latitude}},{{$funeral->longitude}}&amp;key=AIzaSyDg2Ze7xPzEzAcfGbsEhqIJV5KHxmqhklA"></iframe>
                                 </div>
                             </div>
-                            <button class="btn btn-primary">Edit</button>
+                            <hr>
+                            <a class="btn btn-primary"
+                               href="{{route('show_edit_funeral',['id'=>$funeral->fid])}}">Edit</a>
+
+                            <a class="btn btn-danger" href="{{route('delete',['id'=>$funeral->fid])}}"
+                               style="float: right; background-color: crimson; border-color: crimson">Delete</a>
                         </div>
                         {{--<br>--}}
                     </div>

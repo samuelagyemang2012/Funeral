@@ -157,15 +157,12 @@ class ApiController extends Controller
         $input = $request->all();
 
         $f = new Funeral();
-        $data = Auth::id();
-        $id = Auth::user();
-
-        return $data;
 
         $file = '';
         $file_name = '';
 
         $rules = [
+            'user_id' => "required",
             'has_wake_keeping' => 'required',
             'name' => 'required|min:2',
             'deceased_name' => 'required|min:2',
@@ -184,6 +181,7 @@ class ApiController extends Controller
         ];
 
         $message = [
+            "user_id.required"=>"user_id is required",
             "has_wake_keeping.required" => "specify if there is a wake-keeping. 1 for yes, 0 for no",
             "name.required" => "title of funeral is required",
             "deceased_name.required" => "deceased_name is required",

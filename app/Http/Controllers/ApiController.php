@@ -157,9 +157,10 @@ class ApiController extends Controller
         $input = $request->all();
 
         $f = new Funeral();
-        $id = Auth::user()->id;
+        $data = Auth::id();
+        $id = Auth::user();
 
-        return $id;
+        return $data;
 
         $file = '';
         $file_name = '';

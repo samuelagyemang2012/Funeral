@@ -377,13 +377,13 @@ class ApiController extends Controller
 
         $date = date('Y-m-d H:i:s');
 
-        $id = $request->id;
+        $id = $request->fid;
 
         if (empty($id)) {
             return response()->json(
                 [
                     "code" => "400",
-                    "msg" => "id is required"
+                    "msg" => "fid is required"
                 ]);
         }
 

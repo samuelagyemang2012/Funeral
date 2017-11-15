@@ -17,4 +17,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//apis
+Route::post('register', 'ApiController@register');
 
+Route::post('login', 'ApiController@login');
+
+Route::get('get_funerals', 'ApiController@get_funerals');
+
+Route::post('add_funeral', 'ApiController@add_funeral');
+
+Route::post('update_funeral', 'ApiController@update_funeral');
+
+Route::get('delete_funeral', 'ApiController@delete_funeral');
+
+//update_funeral

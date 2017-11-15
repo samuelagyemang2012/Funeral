@@ -163,7 +163,7 @@ class ApiController extends Controller
         $file_name = '';
 
         $rules = [
-            'haswakeeping' => 'required',
+            'has_wake_keeping' => 'required',
             'name' => 'required|min:2',
             'deceased_name' => 'required|min:2',
             'age' => 'required|numeric|min:1',
@@ -173,21 +173,68 @@ class ApiController extends Controller
             'funeral_location' => 'required|min:2',
             'funeral_date' => 'required|date|after:today',
             'attire' => 'required|min:2',
-            'wake_keeping_date' => 'nullable|required_if:wk,1|date|after:today',
-            'wake_keeping_time' => 'nullable|required_if:wk,1',
-            'wake_keeping_location' => 'nullable|required_if:wk,1|min:2',
+            'wake_keeping_date' => 'nullable|required_if:has_wake_keeping,1|date|after:today',
+            'wake_keeping_time' => 'nullable|required_if:has_wake_keeping,1|min:2',
+            'wake_keeping_location' => 'nullable|required_if:has_wake_keeping,1|min:2',
             'latitude' => "required|numeric",
             'longitude' => 'required|numeric',
         ];
 
         $message = [
-            "haswakekeeping.required" => "specify is there is a wake-keeping. 1 for yes, 0 for no",
-            "name.required"=>"title of funeral is required",
-            "name.min"=>"tile of funeral must have a minimum of 2 caharacters"
+            "has_wake_keeping.required" => "specify if there is a wake-keeping. 1 for yes, 0 for no",
+            "name.required" => "title of funeral is required",
+            "deceased_name.required" => "deceased_name is required",
+            "deceased_name.min" => "deceased_name must have a minimum of 2 characters",
+            "name.min" => "title of funeral must have a minimum of 2 characters",
+            "age.required" => "age of deceased is required",
+            "age.numeric" => "age must be a number",
+            "age.min" => "age must be a minimum of 1 year",
+            "information.required" => "information about the funeral is required",
+            "brochure.required" => "brochure is required",
+            "funeral_time.required" => "funeral_time is required",
+            "funeral_location.required" => "funeral_location is required",
+            "funeral_location.min" => "funeral_location must have a minimum of 2 characters",
+            "funeral_date.required" => "funeral_date is required",
+            "funeral_date.date" => "funeral_date must be a date",
+            "funeral_date.after" => "funeral_date must be a date after today",
+            "attire.required" => "attire is required",
+            "attire.min" => "attire must have a minimum of 2 characters",
+            "wake_keeping_date.required_if" => "wake_keeping_date is required if has_wake_keeping is 1",
+            "wake_keeping_date.date" => "wake_keeping_date must be a date",
+            "wake_keeping_date.after" => "wake_keeping_date must be a date after today",
+            "wake_keeping_time.required_if" => "wake_keeping_time is required if has_wake_keeping is 1",
+            "wake_keeping_time.min" => "wake_keeping_time must have a minimum of 2 characters",
+            "wake_keeping_location.required_if" => "wake_keeping_location is required if has_wake_keeping_time is 1",
+            "wake_keeping_location.min" => "wake_keeping_location must have a minimum of 2 characters",
+            "latitude.required" => "latitude is required",
+            "latitude.numeric" => "latitude must be a number",
+            "longitude.required" => "longitude is required",
+            "longitude.numeric" => "longitude must be a number"
         ];
 
-        $this->validate($request, $rules);
+        $validator = Validator::make($request->all(), $rules, $message);
 
+        $somearray = array();
+
+        if ($validator->fails()) {
+
+            foreach ($validator->errors()->all() as $messages) {
+                array_push($somearray, $messages . "\r\n");
+            }
+
+            return response()->json([
+                "code" => '400',
+                "msg" => $somearray
+            ]);
+        }
+
+        if ($input['has_wake_keeping'] != 0 || $input['has_wake_keeping'] != 1) {
+            return response()->json(
+                [
+                    "code" => "400",
+                    "msg" => "has_wake_keeping can either be 1 or 0. 1 for yes, 0 for no"
+                ]);
+        }
 
         if (Input::hasFile('brochure')) {
 
@@ -196,12 +243,25 @@ class ApiController extends Controller
             $file_name = $file->getClientOriginalName();
         }
 
-        if ($input['wk'] == 0) {
-            $f->add($id, $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['wk'], 'none', 'none', 'none');
-            return redirect('/dashboard')->with('status', 'Funeral added successfully');
+        if ($input['has_wake_keeping'] == 0) {
+
+            $f->add($id, $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], 'none', 'none', 'none');
+
+            return response()->json(
+                [
+                    "code" => "0",
+                    "msg" => "Funeral added successfully"
+                ]);
+
         } else {
-            $f->add($id, $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['wk'], $input['wake_keeping_date'], $input['wake_keeping_time'], $input['wake_keeping_location']);
-            return redirect('/dashboard')->with('status', 'Funeral added successfully');
+
+            $f->add($id, $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], $input['wake_keeping_date'], $input['wake_keeping_time'], $input['wake_keeping_location']);
+
+            return response()->json(
+                [
+                    "code" => "0",
+                    "msg" => "Funeral added successfully"
+                ]);
         }
     }
 
@@ -217,7 +277,7 @@ class ApiController extends Controller
         $file_name = '';
 
         $rules = [
-            'wk' => 'required',
+            'has_wake_keeping' => 'required',
             'name' => 'required|min:2',
             'deceased_name' => 'required|min:2',
             'age' => 'required|numeric|min:1',
@@ -227,15 +287,57 @@ class ApiController extends Controller
             'funeral_location' => 'required|min:2',
             'funeral_date' => 'required|date',
             'attire' => 'required|min:2',
-            'wake_keeping_date' => 'nullable|required_if:wk,1|date',
-            'wake_keeping_time' => 'nullable|required_if:wk,1',
-            'wake_keeping_location' => 'nullable|required_if:wk,1|min:2',
+            'wake_keeping_date' => 'nullable|required_if:has_wake_keeping,1|date',
+            'wake_keeping_time' => 'nullable|required_if:has_wake_keeping,1|min:2',
+            'wake_keeping_location' => 'nullable|required_if:has_wake_keeping,1|min:2',
             'latitude' => "required|numeric",
             'longitude' => 'required|numeric',
         ];
 
-        $this->validate($request, $rules);
+        $message = [
+            "has_wake_keeping.required" => "specify if there is a wake-keeping. 1 for yes, 0 for no",
+            "name.required" => "title of funeral is required",
+            "name.min" => "title of funeral must have a minimum of 2 characters",
+            "deceased_name.required" => "deceased_name  must have a minimum of 2 characters",
+            "deceased_name.min" => "deceased_name is required",
+            "age.required" => "age of deceased is required",
+            "age.numeric" => "age must be a number",
+            "age.min" => "age must be a minimum of 1 year",
+            "information.required" => "information about the funeral is required",
+            "funeral_time.required" => "funeral_time is required",
+            "funeral_location.required" => "funeral_location is required",
+            "funeral_location.min" => "funeral_location must have a minimum of 2 characters",
+            "funeral_date.required" => "funeral_date is required",
+            "funeral_date.date" => "funeral_date must be a date",
+            "attire.required" => "attire is required",
+            "attire.min" => "attire must have a minimum of 2 characters",
+            "wake_keeping_date.required_if" => "wake_keeping_date is required if has_wake_keeping is 1",
+            "wake_keeping_date.date" => "wake_keeping_date must be a date",
+            "wake_keeping_time.required_if" => "wake_keeping_time is required if has_wake_keeping is 1",
+            "wake_keeping_time.min" => "wake_keeping_time must have a minimum of 2 characters",
+            "wake_keeping_location.required_if" => "wake_keeping_location is required if has_wake_keeping_time is 1",
+            "wake_keeping_location.min" => "wake_keeping_location must have a minimum of 2 characters",
+            "latitude.required" => "latitude is required",
+            "latitude.numeric" => "latitude must be a number",
+            "longitude.required" => "longitude is required",
+            "longitude.numeric" => "longitude must be a number"
+        ];
 
+        $validator = Validator::make($request->all(), $rules, $message);
+
+        $somearray = array();
+
+        if ($validator->fails()) {
+
+            foreach ($validator->errors()->all() as $messages) {
+                array_push($somearray, $messages . "\r\n");
+            }
+
+            return response()->json([
+                "code" => '400',
+                "msg" => $somearray
+            ]);
+        }
 
         if (Input::hasFile('brochure')) {
 
@@ -245,13 +347,25 @@ class ApiController extends Controller
             $f->update_brochure($input['id'], $file_name);
         }
 
-        if ($input['wk'] == 0) {
-            $f->update_funeral($input['id'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['wk'], 'none', 'none', 'none');
-            return redirect('/dashboard')->with('status', 'Funeral updated successfully');
-        } else {
-            $f->update_funeral($input['id'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['wk'], $input['wake_keeping_date'], $input['wake_keeping_time'], $input['wake_keeping_location']);
+        if ($input['has_wake_keeping'] == 0) {
 
-            return redirect('/dashboard')->with('status', 'Funeral updated successfully');
+            $f->update_funeral($input['id'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], 'none', 'none', 'none');
+
+            return response()->json(
+                [
+                    "code" => "0",
+                    "msg" => "Funeral added successfully"
+                ]);
+
+        } else {
+
+            $f->update_funeral($input['id'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], $input['wake_keeping_date'], $input['wake_keeping_time'], $input['wake_keeping_location']);
+
+            return response()->json(
+                [
+                    "code" => "0",
+                    "msg" => "Funeral added successfully"
+                ]);
         }
     }
 
@@ -263,10 +377,20 @@ class ApiController extends Controller
 
         $id = $request->id;
 
+        if (empty($id)) {
+            return response()->json(
+                [
+                    "code" => "400",
+                    "msg" => "id is required"
+                ]);
+        }
+
         $f->delete_funeral($id, $date);
 
-        return redirect('/dashboard')->with('status', 'Funeral deleted');
-
+        return response()->json(
+            [
+                "code" => "0",
+                "msg" => "Funeral added successfully"
+            ]);
     }
-
 }

@@ -140,7 +140,7 @@ class ApiController extends Controller
             ]);
         }
 
-        $data = $f->get_user_funerals($request->user_id);
+        $data = $f->get_user_funerals_api($request->user_id);
 
 
         $num = $f->num_funerals($request->user_id);

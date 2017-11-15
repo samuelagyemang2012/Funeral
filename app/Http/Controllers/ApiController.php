@@ -62,7 +62,7 @@ class ApiController extends Controller
         if ($validator->fails()) {
 
             foreach ($validator->errors()->all() as $messages) {
-                array_push($somearray, $messages . "\r\n");
+                array_push($somearray, $messages . PHP_EOL);
             }
 
             return response()->json([
@@ -100,7 +100,7 @@ class ApiController extends Controller
         if ($validator->fails()) {
 
             foreach ($validator->errors()->all() as $messages) {
-                array_push($somearray, $messages . "\r\n");
+                array_push($somearray, $messages . PHP_EOL);
             }
 
             return response()->json([

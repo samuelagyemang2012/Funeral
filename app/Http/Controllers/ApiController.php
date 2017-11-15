@@ -90,7 +90,7 @@ class ApiController extends Controller
 
         $messages = [
             "email.required" => "email is required",
-            "password" => "password is required"
+            "password.required" => "password is required"
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);

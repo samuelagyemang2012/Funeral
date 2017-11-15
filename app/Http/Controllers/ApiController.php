@@ -181,7 +181,7 @@ class ApiController extends Controller
         ];
 
         $message = [
-            "user_id.required"=>"user_id is required",
+            "user_id.required" => "user_id is required",
             "has_wake_keeping.required" => "specify if there is a wake-keeping. 1 for yes, 0 for no",
             "name.required" => "title of funeral is required",
             "deceased_name.required" => "deceased_name is required",
@@ -246,7 +246,7 @@ class ApiController extends Controller
 
         if ($input['has_wake_keeping'] == 0) {
 
-            $f->add($id, $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], 'none', 'none', 'none');
+            $f->add($input['user_id'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], 'none', 'none', 'none');
 
             return response()->json(
                 [
@@ -256,7 +256,7 @@ class ApiController extends Controller
 
         } else {
 
-            $f->add($id, $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], $input['wake_keeping_date'], $input['wake_keeping_time'], $input['wake_keeping_location']);
+            $f->add($input['user_id'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], $input['wake_keeping_date'], $input['wake_keeping_time'], $input['wake_keeping_location']);
 
             return response()->json(
                 [

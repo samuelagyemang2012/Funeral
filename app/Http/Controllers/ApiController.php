@@ -272,12 +272,12 @@ class ApiController extends Controller
         $input = $request->all();
 
         $f = new Funeral();
-        $id = Auth::user()->id;
 
         $file = '';
         $file_name = '';
 
         $rules = [
+            'fid' => "required",
             'has_wake_keeping' => 'required',
             'name' => 'required|min:2',
             'deceased_name' => 'required|min:2',
@@ -296,6 +296,7 @@ class ApiController extends Controller
         ];
 
         $message = [
+            "fid.required" => "fid is required",
             "has_wake_keeping.required" => "specify if there is a wake-keeping. 1 for yes, 0 for no",
             "name.required" => "title of funeral is required",
             "name.min" => "title of funeral must have a minimum of 2 characters",
@@ -331,7 +332,7 @@ class ApiController extends Controller
         if ($validator->fails()) {
 
             foreach ($validator->errors()->all() as $messages) {
-                array_push($somearray, $messages . "\r\n");
+                array_push($somearray, $messages . PHP_EOL);
             }
 
             return response()->json([
@@ -350,7 +351,7 @@ class ApiController extends Controller
 
         if ($input['has_wake_keeping'] == 0) {
 
-            $f->update_funeral($input['id'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], 'none', 'none', 'none');
+            $f->update_funeral($input['fid'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], 'none', 'none', 'none');
 
             return response()->json(
                 [
@@ -360,7 +361,7 @@ class ApiController extends Controller
 
         } else {
 
-            $f->update_funeral($input['id'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], $input['wake_keeping_date'], $input['wake_keeping_time'], $input['wake_keeping_location']);
+            $f->update_funeral($input['fid'], $input['name'], $input['deceased_name'], $input['age'], $input['information'], $file_name, $input['funeral_location'], $input['longitude'], $input['latitude'], $input['attire'], $input['funeral_date'], $input['funeral_time'], $input['has_wake_keeping'], $input['wake_keeping_date'], $input['wake_keeping_time'], $input['wake_keeping_location']);
 
             return response()->json(
                 [

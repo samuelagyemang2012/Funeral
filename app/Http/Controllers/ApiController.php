@@ -159,6 +159,8 @@ class ApiController extends Controller
         $f = new Funeral();
         $id = Auth::user()->id;
 
+        return $id;
+
         $file = '';
         $file_name = '';
 

@@ -49,10 +49,17 @@ class Funeral extends Authenticatable
 //            ->paginate(1);
     }
 
+    public function get_funerals()
+    {
+        return DB::table('funerals')
+            ->whereNull('deleted_at')
+            ->get();
+    }
+
     public function get_funeral($id)
     {
         return DB::table('funerals')
-            ->where('fid', '=', $id)
+           ->where('fid', '=', $id)
             ->get();
     }
 

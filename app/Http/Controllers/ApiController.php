@@ -152,6 +152,18 @@ class ApiController extends Controller
         ]);
     }
 
+    public function get_all_funerals(Request $request)
+    {
+        $f = new Funeral();
+
+        $data = $f->get_funerals();
+
+        return response()->json([
+            "code" => 0,
+            "funerals" => $data
+        ]);
+    }
+
     public function add_funeral(Request $request)
     {
         $input = $request->all();

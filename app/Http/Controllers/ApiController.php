@@ -152,7 +152,7 @@ class ApiController extends Controller
         ]);
     }
 
-    public function get_all_funerals(Request $request)
+    public function get_all_funerals()
     {
         $f = new Funeral();
 

@@ -30,4 +30,6 @@ Route::post('update_funeral', 'ApiController@update_funeral');
 
 Route::get('delete_funeral', 'ApiController@delete_funeral');
 
+Route::get('get_all_funerals', 'ApiController@get_all_funerals');
+
 //update_funeral

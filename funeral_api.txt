@@ -1,0 +1,80 @@
+Endpoint:
+104.238.179.142:300/api
+----------------------------
+
+----------------------------
+            POST
+----------------------------
+
+/register
+Parameters:
+
+first_name   min:2
+last_name    min:2
+gender       MALE/FEMALE
+location     min:2
+address      min:2
+email
+telephone
+password     min:6
+-------------------------------
+/login
+Parameters:
+
+email
+password
+-------------------------------
+/add_funeral
+Parameters:
+
+has_wake_keeping         1 for yes 0 for no
+name                     min:2
+deceased_name            min:2
+age                      min:1(year)
+information  
+brochure  
+funeral_time  
+funeral_location         min:2
+funeral_date  
+attire                   min:2
+wake_keeping_date  
+wake_keeping_time        min:2
+wake_keeping_location    min:2
+latitude 
+longitude
+--------------------------------------
+/update_funeral
+Parameters:
+
+has_wake_keeping  
+name                      min:2
+deceased_name             min:2
+age
+information  
+brochure
+funeral_time
+funeral_location          min:2
+funeral_date  date
+attire                    min:2
+wake_keeping_date
+wake_keeping_time         min:2
+wake_keeping_location     min:2
+latitude
+longitude
+------------------------------------
+                ***
+
+------------------------------------
+                GET
+------------------------------------
+/get_funerals
+Parameters:
+
+user_id
+------------------------------------
+/delete_funeral
+Parameters:
+
+id
+------------------------------------
+                ***
